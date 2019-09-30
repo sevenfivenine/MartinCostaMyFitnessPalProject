@@ -20,12 +20,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.options_menu, menu)
-
-        return true
-    }
-
     override fun onAttachFragment(fragment: Fragment?) {
         super.onAttachFragment(fragment)
 

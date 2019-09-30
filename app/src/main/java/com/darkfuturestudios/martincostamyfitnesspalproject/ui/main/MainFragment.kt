@@ -2,12 +2,19 @@ package com.darkfuturestudios.martincostamyfitnesspalproject.ui.main
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.darkfuturestudios.martincostamyfitnesspalproject.*
 import kotlinx.android.synthetic.main.main_fragment.*
+import androidx.core.view.MenuItemCompat
+import com.darkfuturestudios.martincostamyfitnesspalproject.MainActivity
+import android.R.menu
+import android.text.method.TextKeyListener.clear
+import android.util.Log
+
 
 class MainFragment : Fragment() {
 
@@ -30,6 +37,7 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setHasOptionsMenu(true)
 
         val recyclerView = recyclerViewArticles
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -61,6 +69,37 @@ class MainFragment : Fragment() {
             }
 
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        menu?.clear()
+        inflater?.inflate(R.menu.options_menu, menu)
+        val item = menu?.findItem(R.id.search)
+        val searchView = SearchView((activity as MainActivity).supportActionBar!!.themedContext)
+
+        menu?.findItem(R.id.search)?.apply {
+            setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW or MenuItem.SHOW_AS_ACTION_IF_ROOM)
+            actionView = searchView
+        }
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                Log.d("TAG", "Submit!")
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+        })
+        searchView.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+
+            }
+        }
+        )
     }
 
     override fun onResume() {
