@@ -16,7 +16,6 @@ import android.content.Intent
 import android.text.method.TextKeyListener.clear
 import android.util.Log
 
-
 class MainFragment : Fragment() {
 
     companion object {
@@ -53,7 +52,8 @@ class MainFragment : Fragment() {
 
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.container, DetailsFragment.newInstance(article))
-                    ?.commitNow()
+                    ?.addToBackStack(null)
+                    ?.commit()
 
                 /*val intent = Intent(this@MainActivity, EditActivity::class.java)
 
@@ -144,6 +144,8 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        pagesLoaded = 0
 
         ArticleRepository.singleton.deleteAll()
         networkManager?.sendRequest(pagesLoaded, null)
