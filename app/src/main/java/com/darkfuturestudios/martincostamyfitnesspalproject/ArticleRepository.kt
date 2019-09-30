@@ -42,10 +42,33 @@ class ArticleRepository {
         private class DeleteAllAsyncTask : AsyncTask<Void, Void, Unit>() {
 
             override fun doInBackground(vararg params: Void?) {
-
+                singleton.articles.postValue(mutableListOf())
             }
 
         }
+
+       /* private class HasArticleAsyncTask : AsyncTask<String, Void, Boolean>() {
+
+            override fun doInBackground(vararg strings: String?): Boolean {
+                var hasArticle = false
+
+                val articlesList = singleton.articles?.value
+
+                if (articlesList != null) {
+                    for (article in articlesList) {
+                        if (article.id.equals(strings[0])) {
+                            hasArticle = true
+                        }
+                    }
+                }
+
+                return hasArticle
+            }
+
+            override fun onPostExecute(result: Boolean?) {
+
+            }
+        }*/
 
     }
 
@@ -74,4 +97,8 @@ class ArticleRepository {
     fun getAll(): MutableLiveData<MutableList<Article>>? {
         return articles
     }
+
+   /* fun hasArticle(id: String): Boolean {
+        HasArticleAsyncTask().execute(id)
+    }*/
 }

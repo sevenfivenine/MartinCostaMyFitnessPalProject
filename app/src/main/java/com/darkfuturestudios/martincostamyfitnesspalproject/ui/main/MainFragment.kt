@@ -8,10 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.darkfuturestudios.martincostamyfitnesspalproject.Article
-import com.darkfuturestudios.martincostamyfitnesspalproject.ArticleAdapter
-import com.darkfuturestudios.martincostamyfitnesspalproject.NetworkManager
-import com.darkfuturestudios.martincostamyfitnesspalproject.R
+import com.darkfuturestudios.martincostamyfitnesspalproject.*
 import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment : Fragment() {
@@ -58,6 +55,7 @@ class MainFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        ArticleRepository.singleton.deleteAll()
         networkManager?.sendRequest()
     }
 

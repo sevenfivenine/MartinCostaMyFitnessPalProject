@@ -46,7 +46,7 @@ class NetworkManager(val context: Context) {
             .appendQueryParameter("end_date", endDate)
             //.appendQueryParameter("")
             //.appendQueryParameter("")
-            .appendQueryParameter("q", "House Democrats Tread")
+            //.appendQueryParameter("q", "House Democrats Tread")
             .appendQueryParameter("api-key", apiKey)
 
         val url = builder.build().toString()
@@ -72,6 +72,7 @@ class NetworkManager(val context: Context) {
 
         for(i in 0 until articles.length()) {
             val article: JSONObject = articles.get(i) as JSONObject
+            val id: String = article.get("_id") as String
             val headline: String = article.getJSONObject("headline").get("main") as String
 
             var thumbnailUrl = ""
@@ -81,10 +82,11 @@ class NetworkManager(val context: Context) {
                 thumbnailUrl = multimedia.get("url") as String
             }
 
-            val newArticle = Article(headline, thumbnailUrl)
+            val newArticle = Article(id, headline, thumbnailUrl)
+
             ArticleRepository.singleton.insert(newArticle)
 
-            Log.d(TAG, "$headline")
+            //Log.d(TAG, "$headline")
         }
     }
 
