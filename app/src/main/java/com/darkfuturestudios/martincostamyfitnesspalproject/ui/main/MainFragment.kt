@@ -49,7 +49,7 @@ class MainFragment : Fragment() {
             // Pagination
             // Load next page, add it to articles list
             override fun onBottomReached(position: Int) {
-                networkManager?.sendRequest(pagesLoaded)
+                networkManager?.sendRequest(pagesLoaded, null)
                 pagesLoaded++
             }
 
@@ -86,8 +86,9 @@ class MainFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                Log.d("TAG", "Submit!")
-                return false
+                ArticleRepository.singleton.deleteAll()
+                networkManager?.sendRequest(null, query)
+                return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
@@ -106,7 +107,7 @@ class MainFragment : Fragment() {
         super.onResume()
 
         ArticleRepository.singleton.deleteAll()
-        networkManager?.sendRequest(pagesLoaded)
+        networkManager?.sendRequest(pagesLoaded, null)
         pagesLoaded++
     }
 
