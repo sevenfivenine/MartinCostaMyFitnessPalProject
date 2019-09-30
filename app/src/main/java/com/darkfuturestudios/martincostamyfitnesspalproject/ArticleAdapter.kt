@@ -12,9 +12,10 @@ import com.darkfuturestudios.martincostamyfitnesspalproject.ArticleAdapter.OnBot
 
 
 
-class ArticleAdapter(private val listener: RecyclerViewClickListener) :
+class ArticleAdapter() :
     RecyclerView.Adapter<ArticleAdapter.ArticleHolder>() {
 
+    private var listener: RecyclerViewClickListener? = null
     private var articles: List<Article> = mutableListOf()
     private var onBottomReachedListener: OnBottomReachedListener? = null
 
@@ -71,6 +72,14 @@ class ArticleAdapter(private val listener: RecyclerViewClickListener) :
     fun setOnBottomReachedListener(onBottomReachedListener: OnBottomReachedListener) {
 
         this.onBottomReachedListener = onBottomReachedListener
+    }
+
+    fun getArticles(): List<Article> {
+        return articles
+    }
+
+    fun setOnClickListener(listener: ArticleAdapter.RecyclerViewClickListener) {
+        this.listener = listener
     }
 
     interface OnBottomReachedListener {

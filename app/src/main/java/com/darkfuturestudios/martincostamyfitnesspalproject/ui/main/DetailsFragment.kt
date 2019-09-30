@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.darkfuturestudios.martincostamyfitnesspalproject.Article
 
 import com.darkfuturestudios.martincostamyfitnesspalproject.R
 
@@ -23,7 +24,7 @@ import com.darkfuturestudios.martincostamyfitnesspalproject.R
  * Use the [DetailsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class DetailsFragment : Fragment() {
+class DetailsFragment(val article: Article) : Fragment() {
     // TODO: Rename and change types of parameters
     /*private var param1: String? = null
     private var param2: String? = null
@@ -91,12 +92,7 @@ class DetailsFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(/*param1: String, param2: String*/) =
-            DetailsFragment().apply {
-                /*arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }*/
-            }
+        fun newInstance(article: Article/*param1: String, param2: String*/) =
+            DetailsFragment(article)
     }
 }

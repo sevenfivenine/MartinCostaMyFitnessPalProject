@@ -45,10 +45,14 @@ class MainFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
 
+        val adapter = ArticleAdapter()
+
         val listener = object : ArticleAdapter.RecyclerViewClickListener {
             override fun onClick(v: View, position: Int) {
+                val article = adapter.getArticles()[position]
+
                 activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.container, DetailsFragment.newInstance())
+                    ?.replace(R.id.container, DetailsFragment.newInstance(article))
                     ?.commitNow()
 
                 /*val intent = Intent(this@MainActivity, EditActivity::class.java)
@@ -76,7 +80,8 @@ class MainFragment : Fragment() {
             }
         }
 
-        val adapter = ArticleAdapter(listener)
+        adapter.setOnClickListener(listener)
+
         adapter.setOnBottomReachedListener(object : ArticleAdapter.OnBottomReachedListener {
 
             // Pagination
