@@ -12,18 +12,30 @@
 
         <ImageView
             android:id="@+id/imageViewThumbnailDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true" />
 
         <TextView
             android:id="@+id/textViewHeadlineDetails"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/colorHeadline"
+            android:textSize="36sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textViewBylineDetails"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/colorByline"
+            android:textSize="24sp"
+            android:textStyle="italic|bold"/>
 
         <TextView
             android:id="@+id/textViewFirstParaDetails"
