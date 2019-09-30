@@ -3,6 +3,7 @@ package com.darkfuturestudios.martincostamyfitnesspalproject.ui.main
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.AttributeSet
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import com.darkfuturestudios.martincostamyfitnesspalproject.Article
 
 import com.darkfuturestudios.martincostamyfitnesspalproject.R
+import kotlinx.android.synthetic.main.details_fragment.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,6 +45,7 @@ class DetailsFragment(val article: Article) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.details_fragment, container, false)
     }
 
@@ -53,11 +56,18 @@ class DetailsFragment(val article: Article) : Fragment() {
 */
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
         /*if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }*/
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        textViewHeadlineDetails.text = article.headline
     }
 
     /*override fun onDetach() {
