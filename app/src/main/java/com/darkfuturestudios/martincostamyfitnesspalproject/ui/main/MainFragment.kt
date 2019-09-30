@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.main_fragment.*
 import androidx.core.view.MenuItemCompat
 import com.darkfuturestudios.martincostamyfitnesspalproject.MainActivity
 import android.R.menu
+import android.content.Intent
 import android.text.method.TextKeyListener.clear
 import android.util.Log
 
@@ -44,7 +45,38 @@ class MainFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
 
-        val adapter = ArticleAdapter()
+        val listener = object : ArticleAdapter.RecyclerViewClickListener {
+            override fun onClick(v: View, position: Int) {
+                activity?.supportFragmentManager?.beginTransaction()
+                    ?.replace(R.id.container, DetailsFragment.newInstance())
+                    ?.commitNow()
+
+                /*val intent = Intent(this@MainActivity, EditActivity::class.java)
+
+                val dataAdapter = recyclerView.adapter as DataAdapter
+                val media = dataAdapter.getDataset().get(position)
+
+                val textViewName = v.findViewById(R.id.textViewName)
+                val textViewComposer = v.findViewById(R.id.textViewComposer)
+                val textViewSubgenre = v.findViewById(R.id.textViewSubGenre)
+                val textViewDate = v.findViewById(R.id.textViewDate)
+
+                val title = textViewName.getText() as String
+                val author = textViewComposer.getText() as String
+                val type = textViewSubgenre.getText() as String
+                val date = textViewDate.getText() as String
+                val id = media.getId()
+
+                intent.putExtra(KEY_TITLE, title)
+                intent.putExtra(KEY_AUTHOR, author)
+                intent.putExtra(KEY_TYPE, type)
+                intent.putExtra(KEY_DATE, date)
+                intent.putExtra(KEY_ID, id.toString())
+                startActivity(intent)*/
+            }
+        }
+
+        val adapter = ArticleAdapter(listener)
         adapter.setOnBottomReachedListener(object : ArticleAdapter.OnBottomReachedListener {
 
             // Pagination

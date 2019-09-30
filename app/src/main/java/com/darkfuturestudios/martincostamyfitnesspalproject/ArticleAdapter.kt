@@ -12,12 +12,11 @@ import com.darkfuturestudios.martincostamyfitnesspalproject.ArticleAdapter.OnBot
 
 
 
-class ArticleAdapter: RecyclerView.Adapter<ArticleAdapter.ArticleHolder>() {
+class ArticleAdapter(private val listener: RecyclerViewClickListener) :
+    RecyclerView.Adapter<ArticleAdapter.ArticleHolder>() {
 
     private var articles: List<Article> = mutableListOf()
     private var onBottomReachedListener: OnBottomReachedListener? = null
-    private var listener: RecyclerViewClickListener? = null
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.article_item, parent, false)
