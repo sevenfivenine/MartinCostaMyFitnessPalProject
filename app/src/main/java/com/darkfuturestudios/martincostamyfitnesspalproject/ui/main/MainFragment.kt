@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.darkfuturestudios.martincostamyfitnesspalproject.Article
 import com.darkfuturestudios.martincostamyfitnesspalproject.ArticleAdapter
+import com.darkfuturestudios.martincostamyfitnesspalproject.NetworkManager
 import com.darkfuturestudios.martincostamyfitnesspalproject.R
 import kotlinx.android.synthetic.main.main_fragment.*
 
@@ -18,6 +19,8 @@ class MainFragment : Fragment() {
     companion object {
         fun newInstance() = MainFragment()
     }
+
+    private lateinit var networkManager: NetworkManager
 
     private lateinit var viewModel: MainViewModel
 
@@ -40,7 +43,7 @@ class MainFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        viewModel.getAll().observe(this, object : Observer<List<Article>> {
+        viewModel.getAll()?.observe(this, object : Observer<List<Article>> {
 
             override fun onChanged(articles: List<Article>?) {
                 // update recyclerview
@@ -50,6 +53,10 @@ class MainFragment : Fragment() {
             }
 
         })
+    }
+
+    fun setNetworkManager(networkManager: NetworkManager) {
+        this.networkManager = networkManager
     }
 
 }

@@ -8,7 +8,7 @@ import com.darkfuturestudios.martincostamyfitnesspalproject.ArticleRepository
 class MainViewModel : ViewModel() {
 
     private val repository: ArticleRepository
-    private val articles: LiveData<List<Article>>
+    private val articles: LiveData<List<Article>>?
 
     init {
         repository = ArticleRepository()
@@ -31,6 +31,6 @@ class MainViewModel : ViewModel() {
         repository.deleteAll()
     }
 
-    fun getAll(): LiveData<List<Article>> {
+    fun getAll(): LiveData<List<Article>>? {
         return articles
     }}
