@@ -100,8 +100,6 @@ class NetworkManager(val context: Context) {
                 }
             }
 
-            val firstPara: String = ""//article.get
-
             var thumbnailUrl = ""
 
             if (article.getJSONArray("multimedia").length() > 0) {
@@ -109,7 +107,13 @@ class NetworkManager(val context: Context) {
                 thumbnailUrl = multimedia.get("url") as String
             }
 
-            val newArticle = Article(id, headline, bylineString, firstPara, thumbnailUrl)
+            var leadPara: String? = null
+
+            if (article.get("lead_paragraph") != null) {
+                leadPara = article.get("lead_paragraph") as String
+            }
+
+            val newArticle = Article(id, headline, bylineString, leadPara, thumbnailUrl)
 
             ArticleRepository.singleton.insert(newArticle)
 

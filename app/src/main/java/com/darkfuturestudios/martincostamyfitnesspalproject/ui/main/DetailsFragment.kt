@@ -78,6 +78,10 @@ class DetailsFragment(val article: Article) : Fragment() {
             textViewBylineDetails.text = article.byline
         }
 
+        if (article.firstPara != null) {
+            textViewFirstParaDetails.text = article.firstPara
+        }
+
         textViewHeadlineDetails.text = article.headline
     }
 
