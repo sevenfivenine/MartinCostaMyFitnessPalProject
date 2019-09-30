@@ -16,10 +16,12 @@ class ArticleAdapter: RecyclerView.Adapter<ArticleAdapter.ArticleHolder>() {
 
     private var articles: List<Article> = mutableListOf()
     private var onBottomReachedListener: OnBottomReachedListener? = null
+    private var listener: RecyclerViewClickListener? = null
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.article_item, parent, false)
-        return ArticleHolder(itemView)
+        return ArticleHolder(itemView, this.listener!!)
     }
 
     override fun onBindViewHolder(holder: ArticleHolder, position: Int) {
@@ -48,15 +50,23 @@ class ArticleAdapter: RecyclerView.Adapter<ArticleAdapter.ArticleHolder>() {
     }
 
 
-    class ArticleHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+    class ArticleHolder(itemView: View, val listener: RecyclerViewClickListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val imageViewThumbnail: ImageView
         val textViewHeadline: TextView
+
 
         init {
             imageViewThumbnail = itemView.findViewById(R.id.imageViewThumbnail)
             textViewHeadline = itemView.findViewById(R.id.textViewHeadline)
+            itemView.setOnClickListener(this)
         }
+
+        override fun onClick(v: View?) {
+            if (v != null) {
+                listener.onClick(v, adapterPosition)
+            }
+        }
+
     }
 
     fun setOnBottomReachedListener(onBottomReachedListener: OnBottomReachedListener) {
@@ -68,5 +78,9 @@ class ArticleAdapter: RecyclerView.Adapter<ArticleAdapter.ArticleHolder>() {
 
         fun onBottomReached(position: Int)
 
+    }
+
+    interface RecyclerViewClickListener {
+        fun onClick(view: View, position: Int)
     }
 }
