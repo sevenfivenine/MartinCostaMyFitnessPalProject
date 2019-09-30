@@ -1,11 +1,13 @@
 package com.darkfuturestudios.martincostamyfitnesspalproject
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 
 class ArticleAdapter: RecyclerView.Adapter<ArticleAdapter.ArticleHolder>() {
 
@@ -20,6 +22,14 @@ class ArticleAdapter: RecyclerView.Adapter<ArticleAdapter.ArticleHolder>() {
         val currentArticle = articles.get(position)
         //holder.imageViewThumbnail.setImageBitmap(bitmap)
         holder.textViewHeadline.text = currentArticle.headline
+
+        if (currentArticle.thumbnailUrl != null) {
+            val imageUrl = "https://www.nytimes.com/" + currentArticle.thumbnailUrl
+
+            Picasso.get().load(imageUrl).into(holder.imageViewThumbnail)
+        }
+
+
     }
 
     override fun getItemCount(): Int {
