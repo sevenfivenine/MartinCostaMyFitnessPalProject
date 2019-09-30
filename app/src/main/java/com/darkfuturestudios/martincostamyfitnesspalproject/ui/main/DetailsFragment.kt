@@ -7,9 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import com.darkfuturestudios.martincostamyfitnesspalproject.Article
 
 import com.darkfuturestudios.martincostamyfitnesspalproject.R
+import com.darkfuturestudios.martincostamyfitnesspalproject.databinding.DetailsFragmentBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +39,12 @@ class DetailsFragment(val article: Article) : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }*/
+
+        val binding: DetailsFragmentBinding = DataBindingUtil.setContentView(
+            activity!!, R.layout.details_fragment)
+
+        binding.viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
     }
 
     override fun onCreateView(

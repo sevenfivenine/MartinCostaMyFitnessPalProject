@@ -11,6 +11,8 @@ class MainViewModel : ViewModel() {
     private val repository: ArticleRepository
     private val articles: MutableLiveData<MutableList<Article>>?
 
+    public val detailsHeadline: String? = "TEST"
+
     init {
         repository = ArticleRepository.singleton
         articles = this.repository.getAll()
