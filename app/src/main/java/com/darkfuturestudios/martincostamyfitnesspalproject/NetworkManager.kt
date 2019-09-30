@@ -82,6 +82,7 @@ class NetworkManager(val context: Context) {
             }
 
             val newArticle = Article(headline, thumbnailUrl)
+            ArticleRepository.singleton.insert(newArticle)
 
             Log.d(TAG, "$headline")
         }

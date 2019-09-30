@@ -19,7 +19,7 @@ class ArticleAdapter: RecyclerView.Adapter<ArticleAdapter.ArticleHolder>() {
     override fun onBindViewHolder(holder: ArticleHolder, position: Int) {
         val currentArticle = articles.get(position)
         //holder.imageViewThumbnail.setImageBitmap(bitmap)
-        holder.textViewHeadline.text = "TODO"
+        holder.textViewHeadline.text = currentArticle.headline
     }
 
     override fun getItemCount(): Int {
