@@ -2,6 +2,7 @@ package com.darkfuturestudios.martincostamyfitnesspalproject
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -17,6 +18,8 @@ class NetworkManager(val context: Context) {
 
     companion object {
         fun newInstance(context: Context) = NetworkManager(context)
+
+        const val TAG = "NetworkManager"
     }
 
     init {
@@ -30,7 +33,7 @@ class NetworkManager(val context: Context) {
         val apiKey = context.getString(R.string.api_key)
 
         val beginDate = "20190926"
-        val endDate = "20190928"
+        val endDate = "20190930"
 
         val builder = Uri.Builder()
             .scheme("https")
@@ -43,7 +46,7 @@ class NetworkManager(val context: Context) {
             .appendQueryParameter("end_date", endDate)
             //.appendQueryParameter("")
             //.appendQueryParameter("")
-            //.appendQueryParameter("q", query)
+            .appendQueryParameter("q", "House Democrats Tread")
             .appendQueryParameter("api-key", apiKey)
 
         val url = builder.build().toString()
@@ -63,7 +66,25 @@ class NetworkManager(val context: Context) {
     }
 
     fun parseArticlesJSON(response: JSONObject) {
+        Log.d(TAG, "parse")
 
+        val articles = response.getJSONObject("response").getJSONArray("docs")
+
+        for(i in 0 until articles.length()) {
+            val article: JSONObject = articles.get(i) as JSONObject
+            val headline: String = article.getJSONObject("headline").get("main") as String
+
+            var thumbnailUrl = ""
+
+            if (article.getJSONArray("multimedia").length() > 0) {
+                val multimedia: JSONObject = article.getJSONArray("multimedia")[0] as JSONObject
+                thumbnailUrl = multimedia.get("url") as String
+            }
+
+            val newArticle = Article(headline, thumbnailUrl)
+
+            Log.d(TAG, "$headline")
+        }
     }
 
     fun shutdown() {

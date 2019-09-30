@@ -1,4 +1,14 @@
 package com.darkfuturestudios.martincostamyfitnesspalproject
 
-class Article {
+import java.util.*
+
+class Article(val headline: String, val thumbnailUrl: String?) {
+
+    private val id: UUID
+
+    init {
+        id = UUID.randomUUID()
+    }
+
+
 }

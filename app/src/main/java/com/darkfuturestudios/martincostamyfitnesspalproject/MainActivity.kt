@@ -7,7 +7,7 @@ import com.darkfuturestudios.martincostamyfitnesspalproject.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var networkManager: NetworkManager
+    private var networkManager: NetworkManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,20 +22,16 @@ class MainActivity : AppCompatActivity() {
     override fun onAttachFragment(fragment: Fragment?) {
         super.onAttachFragment(fragment)
 
+        networkManager = NetworkManager.newInstance(this)
+
         if (fragment is MainFragment) {
             fragment.setNetworkManager(networkManager)
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        networkManager = NetworkManager.newInstance(this)
-    }
-
     override fun onStop() {
         super.onStop()
 
-        networkManager.shutdown()
+        networkManager?.shutdown()
     }
 }

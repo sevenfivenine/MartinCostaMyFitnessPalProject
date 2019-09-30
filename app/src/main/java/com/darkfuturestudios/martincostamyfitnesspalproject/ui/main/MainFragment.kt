@@ -20,7 +20,7 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var networkManager: NetworkManager
+    private var networkManager: NetworkManager? = null
 
     private lateinit var viewModel: MainViewModel
 
@@ -55,7 +55,13 @@ class MainFragment : Fragment() {
         })
     }
 
-    fun setNetworkManager(networkManager: NetworkManager) {
+    override fun onResume() {
+        super.onResume()
+
+        networkManager?.sendRequest()
+    }
+
+    fun setNetworkManager(networkManager: NetworkManager?) {
         this.networkManager = networkManager
     }
 
