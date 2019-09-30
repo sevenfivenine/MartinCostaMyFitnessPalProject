@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import com.darkfuturestudios.martincostamyfitnesspalproject.Article
 
 import com.darkfuturestudios.martincostamyfitnesspalproject.R
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.details_fragment.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -66,6 +67,16 @@ class DetailsFragment(val article: Article) : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        if (article.thumbnailUrl != null) {
+            val imageUrl = "https://www.nytimes.com/" + article.thumbnailUrl
+
+            Picasso.get().load(imageUrl).into(imageViewThumbnailDetails)
+        }
+
+        if (article.byline != null) {
+            textViewBylineDetails.text = article.byline
+        }
 
         textViewHeadlineDetails.text = article.headline
     }

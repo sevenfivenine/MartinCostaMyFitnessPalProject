@@ -9,6 +9,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import org.json.JSONArray
 import org.json.JSONObject
 
 class NetworkManager(val context: Context) {
@@ -84,6 +85,23 @@ class NetworkManager(val context: Context) {
             val id: String = article.get("_id") as String
             val headline: String = article.getJSONObject("headline").get("main") as String
 
+            val bylinePeople: JSONArray = article.getJSONObject("byline").getJSONArray("person")
+
+            var bylineString: String = ""
+
+            for (j in 0 until bylinePeople.length()) {
+                val person: JSONObject = bylinePeople.get(j) as JSONObject
+                bylineString += person.get("firstname")
+                bylineString += " "
+                bylineString += person.get("lastname")
+
+                if (j < bylinePeople.length() - 1) {
+                    bylineString += ", "
+                }
+            }
+
+            val firstPara: String = ""//article.get
+
             var thumbnailUrl = ""
 
             if (article.getJSONArray("multimedia").length() > 0) {
@@ -91,7 +109,7 @@ class NetworkManager(val context: Context) {
                 thumbnailUrl = multimedia.get("url") as String
             }
 
-            val newArticle = Article(id, headline, thumbnailUrl)
+            val newArticle = Article(id, headline, bylineString, firstPara, thumbnailUrl)
 
             ArticleRepository.singleton.insert(newArticle)
 
