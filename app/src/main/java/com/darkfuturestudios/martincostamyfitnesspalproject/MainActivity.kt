@@ -2,6 +2,7 @@ package com.darkfuturestudios.martincostamyfitnesspalproject
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import androidx.fragment.app.Fragment
 import com.darkfuturestudios.martincostamyfitnesspalproject.ui.main.MainFragment
 
@@ -17,6 +18,12 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.container, MainFragment.newInstance())
                 .commitNow()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.options_menu, menu)
+
+        return true
     }
 
     override fun onAttachFragment(fragment: Fragment?) {
