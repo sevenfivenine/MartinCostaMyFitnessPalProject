@@ -21,6 +21,8 @@ class MainFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
 
+    private var pagesLoaded: Int = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,6 +38,17 @@ class MainFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
 
         val adapter = ArticleAdapter()
+        adapter.setOnBottomReachedListener(object : ArticleAdapter.OnBottomReachedListener {
+
+            // Pagination
+            // Load next page, add it to articles list
+            override fun onBottomReached(position: Int) {
+                networkManager?.sendRequest(pagesLoaded)
+                pagesLoaded++
+            }
+
+        })
+
         recyclerView.adapter = adapter
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
@@ -56,7 +69,8 @@ class MainFragment : Fragment() {
         super.onResume()
 
         ArticleRepository.singleton.deleteAll()
-        networkManager?.sendRequest()
+        networkManager?.sendRequest(pagesLoaded)
+        pagesLoaded++
     }
 
     fun setNetworkManager(networkManager: NetworkManager?) {

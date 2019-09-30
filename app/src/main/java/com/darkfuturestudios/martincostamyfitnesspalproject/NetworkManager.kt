@@ -27,7 +27,7 @@ class NetworkManager(val context: Context) {
         queue = Volley.newRequestQueue(context)
     }
 
-    fun sendRequest() {
+    fun sendRequest(pageNum: Int) {
         val json = JSONObject()
         //val url = context.getString(R.string.http_request_url)
         val apiKey = context.getString(R.string.api_key)
@@ -44,6 +44,7 @@ class NetworkManager(val context: Context) {
             .appendPath("articlesearch.json")
             .appendQueryParameter("begin_date", beginDate)
             .appendQueryParameter("end_date", endDate)
+            .appendQueryParameter("page", "$pageNum")
             //.appendQueryParameter("")
             //.appendQueryParameter("")
             //.appendQueryParameter("q", "House Democrats Tread")

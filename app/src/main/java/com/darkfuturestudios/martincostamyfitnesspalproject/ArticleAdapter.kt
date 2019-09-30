@@ -8,10 +8,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import com.darkfuturestudios.martincostamyfitnesspalproject.ArticleAdapter.OnBottomReachedListener
+
+
 
 class ArticleAdapter: RecyclerView.Adapter<ArticleAdapter.ArticleHolder>() {
 
     private var articles: List<Article> = mutableListOf()
+    private var onBottomReachedListener: OnBottomReachedListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.article_item, parent, false)
@@ -29,7 +33,9 @@ class ArticleAdapter: RecyclerView.Adapter<ArticleAdapter.ArticleHolder>() {
             Picasso.get().load(imageUrl).into(holder.imageViewThumbnail)
         }
 
-
+        if (position == articles.size - 1){
+            onBottomReachedListener?.onBottomReached(position)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -51,5 +57,16 @@ class ArticleAdapter: RecyclerView.Adapter<ArticleAdapter.ArticleHolder>() {
             imageViewThumbnail = itemView.findViewById(R.id.imageViewThumbnail)
             textViewHeadline = itemView.findViewById(R.id.textViewHeadline)
         }
+    }
+
+    fun setOnBottomReachedListener(onBottomReachedListener: OnBottomReachedListener) {
+
+        this.onBottomReachedListener = onBottomReachedListener
+    }
+
+    interface OnBottomReachedListener {
+
+        fun onBottomReached(position: Int)
+
     }
 }
