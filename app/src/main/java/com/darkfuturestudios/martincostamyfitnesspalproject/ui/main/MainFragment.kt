@@ -27,6 +27,7 @@ class MainFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
 
     private var pagesLoaded: Int = 0
+    private var query: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +50,7 @@ class MainFragment : Fragment() {
             // Pagination
             // Load next page, add it to articles list
             override fun onBottomReached(position: Int) {
-                networkManager?.sendRequest(pagesLoaded, null)
+                networkManager?.sendRequest(pagesLoaded, query)
                 pagesLoaded++
             }
 
@@ -87,6 +88,7 @@ class MainFragment : Fragment() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 ArticleRepository.singleton.deleteAll()
+                this@MainFragment.query = query
                 networkManager?.sendRequest(null, query)
                 return true
             }
