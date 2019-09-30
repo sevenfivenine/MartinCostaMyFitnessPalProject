@@ -6,6 +6,8 @@ import com.darkfuturestudios.martincostamyfitnesspalproject.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var networkManager: NetworkManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
@@ -16,4 +18,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        networkManager = NetworkManager.newInstance(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        networkManager.shutdown()
+    }
 }
