@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onAttachFragment(fragment: Fragment?) {
+    override fun onAttachFragment(fragment: Fragment) {
         super.onAttachFragment(fragment)
 
         networkManager = NetworkManager.newInstance(this)
