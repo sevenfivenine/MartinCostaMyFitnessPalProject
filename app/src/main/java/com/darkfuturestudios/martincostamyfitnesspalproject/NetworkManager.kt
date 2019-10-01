@@ -101,6 +101,10 @@ class NetworkManager(val context: Context) {
                 }
             }
 
+            if (bylineString == "") {
+                bylineString = "No Author"
+            }
+
             var thumbnailUrl = ""
 
             if (article.getJSONArray("multimedia").length() > 0) {
