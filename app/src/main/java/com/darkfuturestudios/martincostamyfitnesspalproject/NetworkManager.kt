@@ -1,8 +1,11 @@
 package com.darkfuturestudios.martincostamyfitnesspalproject
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.net.Uri
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -29,6 +32,27 @@ class NetworkManager(val context: Context) {
     }
 
     fun sendRequest(pageNum: Int?, query: String?) {
+        // Check if internet is connected
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+
+        if (!isConnected) {
+            val builder: AlertDialog.Builder? = context.let {
+                AlertDialog.Builder(it)
+            }
+
+            builder?.setMessage(R.string.dialog_message)
+                ?.setTitle(R.string.dialog_title)
+                ?.setNeutralButton(R.string.ok, null)
+
+            val dialog: AlertDialog? = builder?.create()
+
+            dialog?.show()
+
+            return
+        }
+
         val json = JSONObject()
         //val url = context.getString(R.string.http_request_url)
         val apiKey = context.getString(R.string.api_key)

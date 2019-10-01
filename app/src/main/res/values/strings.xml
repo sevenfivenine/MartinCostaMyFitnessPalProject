@@ -8,4 +8,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dialog_message">You are not connected to the internet; articles are unable to load.</string>
+    <string name="dialog_title">No Internet Connection</string>
+    <string name="ok">OK</string>
 </resources>

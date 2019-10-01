@@ -1,8 +1,13 @@
 package com.darkfuturestudios.martincostamyfitnesspalproject
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.darkfuturestudios.martincostamyfitnesspalproject.ui.main.MainFragment
 
@@ -28,6 +33,10 @@ class MainActivity : AppCompatActivity() {
         if (fragment is MainFragment) {
             fragment.setNetworkManager(networkManager)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     override fun onStop() {
