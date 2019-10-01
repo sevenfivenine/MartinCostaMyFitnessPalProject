@@ -1,6 +1,7 @@
 package com.darkfuturestudios.martincostamyfitnesspalproject.ui.main
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.AttributeSet
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import com.darkfuturestudios.martincostamyfitnesspalproject.Article
 
 import com.darkfuturestudios.martincostamyfitnesspalproject.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.details_fragment.*
 
@@ -68,6 +70,11 @@ class DetailsFragment(val article: Article) : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        val fab: FloatingActionButton? = activity?.findViewById(R.id.fabShare)
+        fab?.setOnClickListener {
+            shareArticle()
+        }
+
         if (article.thumbnailUrl != null) {
             val imageUrl = "https://www.nytimes.com/" + article.thumbnailUrl
 
@@ -83,6 +90,17 @@ class DetailsFragment(val article: Article) : Fragment() {
         }
 
         textViewHeadlineDetails.text = article.headline
+    }
+
+    fun shareArticle() {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, article.url)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 
     /*override fun onDetach() {

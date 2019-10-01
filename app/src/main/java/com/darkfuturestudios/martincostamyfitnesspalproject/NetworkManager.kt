@@ -114,13 +114,15 @@ class NetworkManager(val context: Context) {
 
             else continue
 
+            val articleUrl: String = article.get("web_url") as String
+
             var leadPara: String? = null
 
             if (article.get("lead_paragraph") != null) {
                 leadPara = article.get("lead_paragraph") as String
             }
 
-            val newArticle = Article(id, headline, bylineString, leadPara, thumbnailUrl)
+            val newArticle = Article(id, headline, bylineString, leadPara, thumbnailUrl, articleUrl)
 
 
             if (newArticle.headline != null && newArticle.headline != "") {
