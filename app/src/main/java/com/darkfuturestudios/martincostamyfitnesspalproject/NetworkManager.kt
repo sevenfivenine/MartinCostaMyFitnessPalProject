@@ -49,6 +49,7 @@ class NetworkManager(val context: Context) {
             //.appendQueryParameter("")
             //.appendQueryParameter("")
             //.appendQueryParameter("q", "House Democrats Tread")
+            .appendQueryParameter("fq", "source:(\"The New York Times\")")
             .appendQueryParameter("api-key", apiKey)
 
         if (pageNum != null) {
@@ -106,6 +107,8 @@ class NetworkManager(val context: Context) {
                 val multimedia: JSONObject = article.getJSONArray("multimedia")[0] as JSONObject
                 thumbnailUrl = multimedia.get("url") as String
             }
+
+            else continue
 
             var leadPara: String? = null
 
