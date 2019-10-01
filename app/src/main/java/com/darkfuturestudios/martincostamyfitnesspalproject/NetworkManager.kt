@@ -115,7 +115,10 @@ class NetworkManager(val context: Context) {
 
             val newArticle = Article(id, headline, bylineString, leadPara, thumbnailUrl)
 
-            ArticleRepository.singleton.insert(newArticle)
+
+            if (newArticle.headline != null && newArticle.headline != "") {
+                ArticleRepository.singleton.insert(newArticle)
+            }
 
             //Log.d(TAG, "$headline")
         }

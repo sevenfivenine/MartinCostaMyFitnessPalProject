@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
@@ -29,10 +30,16 @@ class ArticleAdapter() :
         //holder.imageViewThumbnail.setImageBitmap(bitmap)
         holder.textViewHeadline.text = currentArticle.headline
 
-        if (currentArticle.thumbnailUrl != null) {
+        if (currentArticle.thumbnailUrl != null && currentArticle.thumbnailUrl != "") {
             val imageUrl = "https://www.nytimes.com/" + currentArticle.thumbnailUrl
 
             Picasso.get().load(imageUrl).into(holder.imageViewThumbnail)
+        }
+
+        else {
+            //val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.0f))
+            //holder.imageViewThumbnail.layoutParams = params
+            holder.imageViewThumbnail.visibility = View.GONE
         }
 
         if (position == articles.size - 1){
