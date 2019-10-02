@@ -50,12 +50,10 @@ class ArticleAdapter :
 
     class ArticleHolder(itemView: View, val listener: RecyclerViewClickListener) :
         RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        val imageViewThumbnail: ImageView
-        val textViewHeadline: TextView
+        val imageViewThumbnail: ImageView = itemView.findViewById(R.id.imageViewThumbnail)
+        val textViewHeadline: TextView = itemView.findViewById(R.id.textViewHeadline)
 
         init {
-            imageViewThumbnail = itemView.findViewById(R.id.imageViewThumbnail)
-            textViewHeadline = itemView.findViewById(R.id.textViewHeadline)
             itemView.setOnClickListener(this)
         }
 

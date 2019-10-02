@@ -38,7 +38,7 @@ class MainFragment : Fragment() {
         val adapter = ArticleAdapter()
 
         val listener = object : ArticleAdapter.RecyclerViewClickListener {
-            override fun onClick(v: View, position: Int) {
+            override fun onClick(view: View, position: Int) {
                 val article = adapter.getArticles()[position]
 
                 activity?.supportFragmentManager?.beginTransaction()
@@ -123,12 +123,6 @@ class MainFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 return false
-            }
-        })
-
-        searchView.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View) {
-
             }
         })
     }

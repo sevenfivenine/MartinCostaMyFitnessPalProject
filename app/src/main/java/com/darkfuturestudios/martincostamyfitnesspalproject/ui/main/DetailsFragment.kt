@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.details_fragment.*
 
 
-class DetailsFragment(val article: Article) : Fragment() {
+class DetailsFragment(private val article: Article) : Fragment() {
 
     companion object {
         @JvmStatic
@@ -57,7 +57,7 @@ class DetailsFragment(val article: Article) : Fragment() {
         textViewHeadlineDetails.text = article.headline
     }
 
-    fun shareArticle() {
+    private fun shareArticle() {
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, article.url)

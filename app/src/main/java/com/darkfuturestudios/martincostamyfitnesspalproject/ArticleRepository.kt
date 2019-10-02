@@ -13,9 +13,9 @@ class ArticleRepository {
 
             override fun doInBackground(vararg articles: Article?) {
                 if (articles.isNotEmpty() && articles[0] is Article) {
-                    val articlesList = singleton.articles?.value
+                    val articlesList = singleton.articles.value
                     articlesList?.add(articles[0]!!)
-                    singleton.articles?.postValue(articlesList)
+                    singleton.articles.postValue(articlesList)
                 }
 
             }

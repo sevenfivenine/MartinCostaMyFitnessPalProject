@@ -7,11 +7,10 @@ import com.darkfuturestudios.martincostamyfitnesspalproject.ArticleRepository
 
 class MainViewModel : ViewModel() {
 
-    private val repository: ArticleRepository
+    private val repository: ArticleRepository = ArticleRepository.singleton
     private val articles: MutableLiveData<MutableList<Article>>?
 
     init {
-        repository = ArticleRepository.singleton
         articles = this.repository.getAll()
     }
 

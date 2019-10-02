@@ -14,9 +14,9 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONArray
 import org.json.JSONObject
 
-class NetworkManager(val context: Context) {
+class NetworkManager(private val context: Context) {
 
-    private val queue: RequestQueue
+    private val queue: RequestQueue = Volley.newRequestQueue(context)
 
     var pageToLoad: Int = 0
     var prevQuery: String? = null
@@ -27,11 +27,6 @@ class NetworkManager(val context: Context) {
         const val TAG = "NetworkManager"
         const val RESPONSE_CODE_UNAUTHORIZED = 401
         const val RESPONSE_CODE_LIMIT_REACHED = 429
-    }
-
-    init {
-        // Instantiate the RequestQueue.
-        queue = Volley.newRequestQueue(context)
     }
 
     fun sendRequest(query: String?) {
@@ -127,7 +122,7 @@ class NetworkManager(val context: Context) {
         queue.add(jsonObjectRequest)
     }
 
-    fun parseArticlesJSON(response: JSONObject) {
+    private fun parseArticlesJSON(response: JSONObject) {
         val articles = response.getJSONObject("response").getJSONArray("docs")
 
         for (i in 0 until articles.length()) {
