@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.darkfuturestudios.martincostamyfitnesspalproject.ArticleAdapter.OnBottomReachedListener
-
+import com.squareup.picasso.Callback
+import java.lang.Exception
 
 
 class ArticleAdapter() :
@@ -33,7 +35,16 @@ class ArticleAdapter() :
         if (currentArticle.thumbnailUrl != null && currentArticle.thumbnailUrl != "") {
             val imageUrl = "https://www.nytimes.com/" + currentArticle.thumbnailUrl
 
-            Picasso.get().load(imageUrl).into(holder.imageViewThumbnail)
+            Picasso.get().load(imageUrl).into(holder.imageViewThumbnail, object : Callback {
+                override fun onSuccess() {
+                    //holder.imageViewThumbnail.layoutParams.width = ConstraintLayout.LayoutParams.MATCH_PARENT
+                }
+
+                override fun onError(e: Exception?) {
+
+                }
+
+            })
         }
 
         else {
