@@ -56,12 +56,7 @@ class NetworkManager(val context: Context) {
             return
         }
 
-        val json = JSONObject()
-        //val url = context.getString(R.string.http_request_url)
         val apiKey = context.getString(R.string.api_key)
-
-        val beginDate = "20190926"
-        val endDate = "20190930"
 
         val builder = Uri.Builder()
             .scheme("https")
@@ -70,12 +65,7 @@ class NetworkManager(val context: Context) {
             .appendPath("search")
             .appendPath("v2")
             .appendPath("articlesearch.json")
-            .appendQueryParameter("begin_date", beginDate)
-            .appendQueryParameter("end_date", endDate)
-            //.appendQueryParameter("page", "$pageNum")
-            //.appendQueryParameter("")
-            //.appendQueryParameter("")
-            //.appendQueryParameter("q", "House Democrats Tread")
+            .appendQueryParameter("sort", "newest")
             .appendQueryParameter("fq", "source:(\"The New York Times\")")
             .appendQueryParameter("api-key", apiKey)
 
@@ -131,15 +121,13 @@ class NetworkManager(val context: Context) {
             }
         ).setTag(context)
 
-        Log.d(TAG, "Page loaded $pageToLoad")
+        Log.d(TAG, "Page loaded: $pageToLoad")
 
         // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest)
     }
 
     fun parseArticlesJSON(response: JSONObject) {
-        Log.d(TAG, "parse")
-
         val articles = response.getJSONObject("response").getJSONArray("docs")
 
         for (i in 0 until articles.length()) {
@@ -149,7 +137,7 @@ class NetworkManager(val context: Context) {
 
             val bylinePeople: JSONArray = article.getJSONObject("byline").getJSONArray("person")
 
-            var bylineString: String = ""
+            var bylineString = ""
 
             for (j in 0 until bylinePeople.length()) {
                 val person: JSONObject = bylinePeople.get(j) as JSONObject
@@ -166,7 +154,7 @@ class NetworkManager(val context: Context) {
                 bylineString = "No Author"
             }
 
-            var thumbnailUrl = ""
+            var thumbnailUrl: String
 
             if (article.getJSONArray("multimedia").length() > 0) {
                 val multimedia: JSONObject = article.getJSONArray("multimedia")[0] as JSONObject
@@ -187,8 +175,6 @@ class NetworkManager(val context: Context) {
             if (newArticle.headline != null && newArticle.headline != "") {
                 ArticleRepository.singleton.insert(newArticle)
             }
-
-            //Log.d(TAG, "$headline")
         }
 
         pageToLoad++
