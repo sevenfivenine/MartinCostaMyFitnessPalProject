@@ -105,6 +105,7 @@ class MainFragment : Fragment() {
             if (query != null) {
                 expandActionView()
                 searchView.setQuery(query, false)
+                searchView.clearFocus()
             }
         }
 
@@ -113,6 +114,7 @@ class MainFragment : Fragment() {
                 ArticleRepository.singleton.deleteAll()
                 this@MainFragment.query = query
                 networkManager?.sendRequest(query)
+                searchView.clearFocus()
                 return true
             }
 
