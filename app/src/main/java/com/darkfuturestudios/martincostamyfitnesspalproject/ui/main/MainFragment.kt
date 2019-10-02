@@ -100,6 +100,8 @@ class MainFragment : Fragment() {
                     networkManager?.pageToLoad = 0
                     networkManager?.sendRequest(null)
 
+                    onCreateOptionsMenu(menu, inflater)
+
                     return true
                 }
 
