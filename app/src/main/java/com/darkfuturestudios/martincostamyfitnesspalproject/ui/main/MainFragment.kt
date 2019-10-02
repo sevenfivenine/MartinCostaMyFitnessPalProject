@@ -9,12 +9,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.darkfuturestudios.martincostamyfitnesspalproject.*
 import kotlinx.android.synthetic.main.main_fragment.*
-import androidx.core.view.MenuItemCompat
-import com.darkfuturestudios.martincostamyfitnesspalproject.MainActivity
-import android.R.menu
-import android.content.Intent
-import android.text.method.TextKeyListener.clear
-import android.util.Log
 
 class MainFragment : Fragment() {
 
@@ -26,7 +20,6 @@ class MainFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
 
-    private var pagesLoaded: Int = 0
     private var query: String? = null
 
     override fun onCreateView(
@@ -54,29 +47,6 @@ class MainFragment : Fragment() {
                     ?.replace(R.id.container, DetailsFragment.newInstance(article))
                     ?.addToBackStack(null)
                     ?.commit()
-
-                /*val intent = Intent(this@MainActivity, EditActivity::class.java)
-
-                val dataAdapter = recyclerView.adapter as DataAdapter
-                val media = dataAdapter.getDataset().get(position)
-
-                val textViewName = v.findViewById(R.id.textViewName)
-                val textViewComposer = v.findViewById(R.id.textViewComposer)
-                val textViewSubgenre = v.findViewById(R.id.textViewSubGenre)
-                val textViewDate = v.findViewById(R.id.textViewDate)
-
-                val title = textViewName.getText() as String
-                val author = textViewComposer.getText() as String
-                val type = textViewSubgenre.getText() as String
-                val date = textViewDate.getText() as String
-                val id = media.getId()
-
-                intent.putExtra(KEY_TITLE, title)
-                intent.putExtra(KEY_AUTHOR, author)
-                intent.putExtra(KEY_TYPE, type)
-                intent.putExtra(KEY_DATE, date)
-                intent.putExtra(KEY_ID, id.toString())
-                startActivity(intent)*/
             }
         }
 
@@ -87,8 +57,7 @@ class MainFragment : Fragment() {
             // Pagination
             // Load next page, add it to articles list
             override fun onBottomReached(position: Int) {
-                networkManager?.sendRequest(pagesLoaded, query)
-                pagesLoaded++
+                networkManager?.sendRequest(query)
             }
 
         })
@@ -126,7 +95,7 @@ class MainFragment : Fragment() {
             override fun onQueryTextSubmit(query: String): Boolean {
                 ArticleRepository.singleton.deleteAll()
                 this@MainFragment.query = query
-                networkManager?.sendRequest(null, query)
+                networkManager?.sendRequest(query)
                 return true
             }
 
@@ -145,11 +114,10 @@ class MainFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        pagesLoaded = 0
+        //pagesLoaded = 0
 
-        ArticleRepository.singleton.deleteAll()
-        networkManager?.sendRequest(pagesLoaded, null)
-        pagesLoaded++
+        //ArticleRepository.singleton.deleteAll()
+        networkManager?.sendRequest(null)
     }
 
     fun setNetworkManager(networkManager: NetworkManager?) {

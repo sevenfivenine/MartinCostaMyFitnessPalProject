@@ -18,6 +18,8 @@ class NetworkManager(val context: Context) {
 
     private val queue: RequestQueue
 
+    var pageToLoad: Int = 0
+    var prevQuery: String? = null
 
     companion object {
         fun newInstance(context: Context) = NetworkManager(context)
@@ -32,7 +34,7 @@ class NetworkManager(val context: Context) {
         queue = Volley.newRequestQueue(context)
     }
 
-    fun sendRequest(pageNum: Int?, query: String?) {
+    fun sendRequest(query: String?) {
         // Check if internet is connected
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
@@ -77,9 +79,14 @@ class NetworkManager(val context: Context) {
             .appendQueryParameter("fq", "source:(\"The New York Times\")")
             .appendQueryParameter("api-key", apiKey)
 
-        if (pageNum != null) {
-            builder.appendQueryParameter("page", "$pageNum")
+        // In this case, we need to reset the variable pageToLoad to 0, because we have a different query
+        if (query != prevQuery) {
+            pageToLoad = 0
         }
+
+        prevQuery = query
+
+        builder.appendQueryParameter("page", "$pageToLoad")
 
         if (query != null) {
             builder.appendQueryParameter("q", query)
@@ -123,6 +130,8 @@ class NetworkManager(val context: Context) {
                 }
             }
         ).setTag(context)
+
+        Log.d(TAG, "Page loaded $pageToLoad")
 
         // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest)
@@ -181,6 +190,8 @@ class NetworkManager(val context: Context) {
 
             //Log.d(TAG, "$headline")
         }
+
+        pageToLoad++
     }
 
     fun shutdown() {
