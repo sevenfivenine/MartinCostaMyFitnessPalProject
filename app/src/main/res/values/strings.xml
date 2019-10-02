@@ -8,7 +8,15 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="dialog_message">You are not connected to the internet; articles are unable to load.</string>
-    <string name="dialog_title">No Internet Connection</string>
+
+    <string name="dialog_message_no_connection">You are not connected to the internet; articles are unable to load.</string>
+    <string name="dialog_title_no_connection">No Internet Connection</string>
+
+    <string name="dialog_message_unauthorized">You may have an invalid API key; unable to retrieve articles.</string>
+    <string name="dialog_title_unauthorized">Unauthorized API Access</string>
+
+    <string name="dialog_message_limit_reached">You are sending too many requests to the server; try again in one minute.</string>
+    <string name="dialog_title_limit_reached">Query Limit Reached</string>
+
     <string name="ok">OK</string>
 </resources>

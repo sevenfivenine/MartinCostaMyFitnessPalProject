@@ -10,7 +10,6 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONArray
 import org.json.JSONObject
@@ -24,6 +23,8 @@ class NetworkManager(val context: Context) {
         fun newInstance(context: Context) = NetworkManager(context)
 
         const val TAG = "NetworkManager"
+        const val RESPONSE_CODE_UNAUTHORIZED = 401
+        const val RESPONSE_CODE_LIMIT_REACHED = 429
     }
 
     init {
@@ -38,15 +39,15 @@ class NetworkManager(val context: Context) {
         val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
 
         if (!isConnected) {
-            val builder: AlertDialog.Builder? = context.let {
+            val noConnectionBuilder: AlertDialog.Builder? = context.let {
                 AlertDialog.Builder(it)
             }
 
-            builder?.setMessage(R.string.dialog_message)
-                ?.setTitle(R.string.dialog_title)
+            noConnectionBuilder?.setMessage(R.string.dialog_message_no_connection)
+                ?.setTitle(R.string.dialog_title_no_connection)
                 ?.setNeutralButton(R.string.ok, null)
 
-            val dialog: AlertDialog? = builder?.create()
+            val dialog: AlertDialog? = noConnectionBuilder?.create()
 
             dialog?.show()
 
@@ -89,10 +90,37 @@ class NetworkManager(val context: Context) {
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null,
             Response.Listener { response ->
                 parseArticlesJSON(response)
-                //textView.text = "Response: %s".format(response.toString())
             },
             Response.ErrorListener { error ->
-                // TODO: Handle error
+                val responseCode = error.networkResponse.statusCode
+
+                if (responseCode == RESPONSE_CODE_UNAUTHORIZED) {
+                    val unauthorizedBuilder: AlertDialog.Builder? = context.let {
+                        AlertDialog.Builder(it)
+                    }
+
+                    unauthorizedBuilder?.setMessage(R.string.dialog_message_unauthorized)
+                        ?.setTitle(R.string.dialog_title_unauthorized)
+                        ?.setNeutralButton(R.string.ok, null)
+
+                    val dialog: AlertDialog? = unauthorizedBuilder?.create()
+
+                    dialog?.show()
+                }
+
+                else if (responseCode == RESPONSE_CODE_LIMIT_REACHED) {
+                    val limitReachedBuilder: AlertDialog.Builder? = context.let {
+                        AlertDialog.Builder(it)
+                    }
+
+                    limitReachedBuilder?.setMessage(R.string.dialog_message_limit_reached)
+                        ?.setTitle(R.string.dialog_title_limit_reached)
+                        ?.setNeutralButton(R.string.ok, null)
+
+                    val dialog: AlertDialog? = limitReachedBuilder?.create()
+
+                    dialog?.show()
+                }
             }
         ).setTag(context)
 
@@ -105,7 +133,7 @@ class NetworkManager(val context: Context) {
 
         val articles = response.getJSONObject("response").getJSONArray("docs")
 
-        for(i in 0 until articles.length()) {
+        for (i in 0 until articles.length()) {
             val article: JSONObject = articles.get(i) as JSONObject
             val id: String = article.get("_id") as String
             val headline: String = article.getJSONObject("headline").get("main") as String
@@ -134,9 +162,7 @@ class NetworkManager(val context: Context) {
             if (article.getJSONArray("multimedia").length() > 0) {
                 val multimedia: JSONObject = article.getJSONArray("multimedia")[0] as JSONObject
                 thumbnailUrl = multimedia.get("url") as String
-            }
-
-            else continue
+            } else continue
 
             val articleUrl: String = article.get("web_url") as String
 
