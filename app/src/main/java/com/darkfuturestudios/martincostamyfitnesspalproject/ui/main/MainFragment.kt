@@ -100,6 +100,12 @@ class MainFragment : Fragment() {
                 }
 
             })
+
+            // If we are coming back from a DetailsFragment where we had already entered a query, reflect this
+            if (query != null) {
+                expandActionView()
+                searchView.setQuery(query, false)
+            }
         }
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -124,7 +130,18 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        networkManager?.sendRequest(null)
+
+        // If we are coming back from DetailsFragment when the user had input a query, resume viewing that query
+        if (networkManager?.prevQuery != null) {
+            query = networkManager?.prevQuery
+            networkManager?.sendRequest(query)
+        }
+
+
+        // Otherwise, just show all articles
+        else {
+            networkManager?.sendRequest(null)
+        }
     }
 
     fun setNetworkManager(networkManager: NetworkManager?) {

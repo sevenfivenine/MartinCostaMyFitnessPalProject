@@ -121,7 +121,7 @@ class NetworkManager(val context: Context) {
             }
         ).setTag(context)
 
-        Log.d(TAG, "Page loaded: $pageToLoad")
+        Log.d(TAG, "Page loaded: $pageToLoad for query: $query")
 
         // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest)
