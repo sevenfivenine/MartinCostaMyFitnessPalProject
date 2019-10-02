@@ -67,7 +67,6 @@ class ArticleAdapter :
     }
 
     fun setOnBottomReachedListener(onBottomReachedListener: OnBottomReachedListener) {
-
         this.onBottomReachedListener = onBottomReachedListener
     }
 

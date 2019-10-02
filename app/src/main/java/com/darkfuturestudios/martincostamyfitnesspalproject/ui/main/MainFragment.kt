@@ -3,7 +3,6 @@ package com.darkfuturestudios.martincostamyfitnesspalproject.ui.main
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -18,9 +17,7 @@ class MainFragment : Fragment() {
     }
 
     private var networkManager: NetworkManager? = null
-
     private lateinit var viewModel: MainViewModel
-
     private var query: String? = null
 
     override fun onCreateView(
@@ -54,7 +51,6 @@ class MainFragment : Fragment() {
         adapter.setOnClickListener(listener)
 
         adapter.setOnBottomReachedListener(object : ArticleAdapter.OnBottomReachedListener {
-
             // Pagination
             // Load next page, add it to articles list
             override fun onBottomReached(position: Int) {
@@ -70,7 +66,7 @@ class MainFragment : Fragment() {
         viewModel.getAll()?.observe(this, object : Observer<List<Article>> {
 
             override fun onChanged(articles: List<Article>?) {
-                // update recyclerview
+                // update RecyclerView
                 if (articles != null) {
                     adapter.setArticles(articles)
                 }
@@ -84,7 +80,6 @@ class MainFragment : Fragment() {
 
         menu.clear()
         inflater.inflate(R.menu.options_menu, menu)
-        val item = menu.findItem(R.id.search)
         val searchView = SearchView((activity as MainActivity).supportActionBar!!.themedContext)
 
         menu.findItem(R.id.search)?.apply {
@@ -119,6 +114,7 @@ class MainFragment : Fragment() {
                 return false
             }
         })
+
         searchView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
 
@@ -128,10 +124,6 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
-        //pagesLoaded = 0
-
-        //ArticleRepository.singleton.deleteAll()
         networkManager?.sendRequest(null)
     }
 

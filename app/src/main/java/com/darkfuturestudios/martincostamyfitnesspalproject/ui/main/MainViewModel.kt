@@ -1,6 +1,5 @@
 package com.darkfuturestudios.martincostamyfitnesspalproject.ui.main
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.darkfuturestudios.martincostamyfitnesspalproject.Article
@@ -34,4 +33,5 @@ class MainViewModel : ViewModel() {
 
     fun getAll(): MutableLiveData<MutableList<Article>>? {
         return articles
-    }}
+    }
+}
