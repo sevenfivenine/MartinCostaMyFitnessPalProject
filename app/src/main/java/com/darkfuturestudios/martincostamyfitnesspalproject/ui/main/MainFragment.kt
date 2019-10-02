@@ -3,6 +3,7 @@ package com.darkfuturestudios.martincostamyfitnesspalproject.ui.main
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -81,14 +82,29 @@ class MainFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
 
-        menu?.clear()
-        inflater?.inflate(R.menu.options_menu, menu)
-        val item = menu?.findItem(R.id.search)
+        menu.clear()
+        inflater.inflate(R.menu.options_menu, menu)
+        val item = menu.findItem(R.id.search)
         val searchView = SearchView((activity as MainActivity).supportActionBar!!.themedContext)
 
-        menu?.findItem(R.id.search)?.apply {
+        menu.findItem(R.id.search)?.apply {
             setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW or MenuItem.SHOW_AS_ACTION_IF_ROOM)
             actionView = searchView
+
+            setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+                override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                    return true
+                }
+
+                override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                    ArticleRepository.singleton.deleteAll()
+
+                    networkManager?.sendRequest(null)
+
+                    return true
+                }
+
+            })
         }
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -107,8 +123,7 @@ class MainFragment : Fragment() {
             override fun onClick(v: View) {
 
             }
-        }
-        )
+        })
     }
 
     override fun onResume() {
