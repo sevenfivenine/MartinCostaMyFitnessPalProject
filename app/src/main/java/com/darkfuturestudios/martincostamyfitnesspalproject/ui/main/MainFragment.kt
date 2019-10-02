@@ -94,6 +94,9 @@ class MainFragment : Fragment() {
                 override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
                     ArticleRepository.singleton.deleteAll()
 
+                    // Go back to showing all articles
+                    networkManager?.prevQuery = null
+                    networkManager?.pageToLoad = 0
                     networkManager?.sendRequest(null)
 
                     return true
