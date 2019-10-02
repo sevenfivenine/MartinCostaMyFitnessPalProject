@@ -7,5 +7,6 @@ class Article(
     val byline: String?,
     val firstPara: String?,
     val thumbnailUrl: String?,
-    val url: String
+    val url: String,
+    val pubDate: String?
 )

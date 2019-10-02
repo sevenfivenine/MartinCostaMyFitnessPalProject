@@ -48,6 +48,17 @@
                 android:textStyle="italic|bold"/>
 
             <TextView
+                android:id="@+id/textViewPubDateDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:textColor="@color/colorByline"
+                android:textSize="24sp"
+                android:textStyle="italic"/>
+
+            <TextView
                 android:id="@+id/textViewFirstParaDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

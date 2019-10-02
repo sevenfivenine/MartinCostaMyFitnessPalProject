@@ -163,14 +163,19 @@ class NetworkManager(val context: Context) {
 
             val articleUrl: String = article.get("web_url") as String
 
+            var pubDate: String? = null
+
+            if (article.get("pub_date") != null) {
+                pubDate = article.get("pub_date") as String
+            }
+
             var leadPara: String? = null
 
             if (article.get("lead_paragraph") != null) {
                 leadPara = article.get("lead_paragraph") as String
             }
 
-            val newArticle = Article(id, headline, bylineString, leadPara, thumbnailUrl, articleUrl)
-
+            val newArticle = Article(id, headline, bylineString, leadPara, thumbnailUrl, articleUrl, pubDate)
 
             if (newArticle.headline != null && newArticle.headline != "") {
                 ArticleRepository.singleton.insert(newArticle)

@@ -46,6 +46,10 @@ class DetailsFragment(val article: Article) : Fragment() {
             textViewBylineDetails.text = article.byline
         }
 
+        if (article.pubDate != null) {
+            textViewPubDateDetails.text = article.pubDate.substring(0, 10)
+        }
+
         if (article.firstPara != null) {
             textViewFirstParaDetails.text = article.firstPara
         }
