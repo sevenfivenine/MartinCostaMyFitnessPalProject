@@ -1,7 +1,6 @@
 package com.darkfuturestudios.martincostamyfitnesspalproject
 
 import android.os.AsyncTask
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 class ArticleRepository {
@@ -47,29 +46,6 @@ class ArticleRepository {
 
         }
 
-       /* private class HasArticleAsyncTask : AsyncTask<String, Void, Boolean>() {
-
-            override fun doInBackground(vararg strings: String?): Boolean {
-                var hasArticle = false
-
-                val articlesList = singleton.articles?.value
-
-                if (articlesList != null) {
-                    for (article in articlesList) {
-                        if (article.id.equals(strings[0])) {
-                            hasArticle = true
-                        }
-                    }
-                }
-
-                return hasArticle
-            }
-
-            override fun onPostExecute(result: Boolean?) {
-
-            }
-        }*/
-
     }
 
     private var articles: MutableLiveData<MutableList<Article>> = MutableLiveData()
@@ -98,7 +74,4 @@ class ArticleRepository {
         return articles
     }
 
-   /* fun hasArticle(id: String): Boolean {
-        HasArticleAsyncTask().execute(id)
-    }*/
 }

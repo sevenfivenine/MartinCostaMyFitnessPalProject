@@ -1,21 +1,15 @@
 package com.darkfuturestudios.martincostamyfitnesspalproject
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import com.darkfuturestudios.martincostamyfitnesspalproject.ArticleAdapter.OnBottomReachedListener
-import com.squareup.picasso.Callback
-import java.lang.Exception
 
 
-class ArticleAdapter() :
+class ArticleAdapter :
     RecyclerView.Adapter<ArticleAdapter.ArticleHolder>() {
 
     private var listener: RecyclerViewClickListener? = null
@@ -23,37 +17,24 @@ class ArticleAdapter() :
     private var onBottomReachedListener: OnBottomReachedListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.article_item, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.article_item, parent, false)
         return ArticleHolder(itemView, this.listener!!)
     }
 
     override fun onBindViewHolder(holder: ArticleHolder, position: Int) {
-        val currentArticle = articles.get(position)
-        //holder.imageViewThumbnail.setImageBitmap(bitmap)
+        val currentArticle = articles[position]
         holder.textViewHeadline.text = currentArticle.headline
 
         if (currentArticle.thumbnailUrl != null && currentArticle.thumbnailUrl != "") {
             val imageUrl = "https://www.nytimes.com/" + currentArticle.thumbnailUrl
 
-            Picasso.get().load(imageUrl).into(holder.imageViewThumbnail, object : Callback {
-                override fun onSuccess() {
-                    //holder.imageViewThumbnail.layoutParams.width = ConstraintLayout.LayoutParams.MATCH_PARENT
-                }
-
-                override fun onError(e: Exception?) {
-
-                }
-
-            })
-        }
-
-        else {
-            //val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.0f))
-            //holder.imageViewThumbnail.layoutParams = params
+            Picasso.get().load(imageUrl).into(holder.imageViewThumbnail)
+        } else {
             holder.imageViewThumbnail.visibility = View.GONE
         }
 
-        if (position == articles.size - 1){
+        if (position == articles.size - 1) {
             onBottomReachedListener?.onBottomReached(position)
         }
     }
@@ -67,11 +48,10 @@ class ArticleAdapter() :
         notifyDataSetChanged()
     }
 
-
-    class ArticleHolder(itemView: View, val listener: RecyclerViewClickListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    class ArticleHolder(itemView: View, val listener: RecyclerViewClickListener) :
+        RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val imageViewThumbnail: ImageView
         val textViewHeadline: TextView
-
 
         init {
             imageViewThumbnail = itemView.findViewById(R.id.imageViewThumbnail)
@@ -84,7 +64,6 @@ class ArticleAdapter() :
                 listener.onClick(v, adapterPosition)
             }
         }
-
     }
 
     fun setOnBottomReachedListener(onBottomReachedListener: OnBottomReachedListener) {
@@ -96,17 +75,16 @@ class ArticleAdapter() :
         return articles
     }
 
-    fun setOnClickListener(listener: ArticleAdapter.RecyclerViewClickListener) {
+    fun setOnClickListener(listener: RecyclerViewClickListener) {
         this.listener = listener
     }
 
     interface OnBottomReachedListener {
-
         fun onBottomReached(position: Int)
-
     }
 
     interface RecyclerViewClickListener {
         fun onClick(view: View, position: Int)
     }
+
 }
