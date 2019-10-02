@@ -95,6 +95,7 @@ class MainFragment : Fragment() {
                     ArticleRepository.singleton.deleteAll()
 
                     // Go back to showing all articles
+                    query = null
                     networkManager?.prevQuery = null
                     networkManager?.pageToLoad = 0
                     networkManager?.sendRequest(null)
@@ -135,7 +136,6 @@ class MainFragment : Fragment() {
             query = networkManager?.prevQuery
             networkManager?.sendRequest(query)
         }
-
 
         // Otherwise, just show all articles
         else {
